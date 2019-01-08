@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:async';
 import 'util/toast.dart';
+import 'util/route.dart';
 
 void main() {
 //  runApp(new MaterialApp(
@@ -9,8 +10,12 @@ void main() {
 //    home: ss(),
 //  ));
   runApp(new MaterialApp(
-    title: "容器",
-    home: list(),
+    title: "demo",
+    home: new tabBar(tStr: "第一次进页面"),
+//    routes: <String, WidgetBuilder>{
+//      '/router/home': (BuildContext context) => new Container3(),
+//      '/router/tab': (BuildContext context) => new tabBar(),
+//    },
   ));
 }
 
@@ -168,7 +173,7 @@ class list extends StatelessWidget {
             onPressed: () {
               Toast.toast(context, "返回返回返回");
             }),
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         //怎么设置都没用啊。
         actions: <Widget>[
           //标题右边的布局，部件从右边开始，多个布局会往左挤
@@ -192,19 +197,27 @@ class list extends StatelessWidget {
               children: <Widget>[Text("one"), Text("Tuo"), Text("three")], //布局
               mainAxisAlignment: MainAxisAlignment.center,
             ),
-            preferredSize: Size(0, 10)
-        ),
+            preferredSize: Size(0, 10)),
         //大小
-        elevation: 10, //高度。其实就是用阴影给人立体的高度
-        backgroundColor: Colors.pink,//背景颜色
-        brightness: Brightness.light,//亮度
-        iconTheme: IconThemeData(color: Colors.black,opacity: 0.9),//改变图标颜色，透明度，大小
-        textTheme: TextTheme(display1: TextStyle(color: Colors.blue)),//太复杂，而且感觉没什么用
-        primary: true,//设置导航栏的内容是否无视手机的导航栏
-        centerTitle: true,//导航标题是否居中
-        titleSpacing: 99,//不知道怎么用
-        toolbarOpacity: 0.5,//标题透明度。
-        bottomOpacity: 0.5,//底部标题透明度
+        elevation: 10,
+        //高度。其实就是用阴影给人立体的高度
+        backgroundColor: Colors.pink,
+        //背景颜色
+        brightness: Brightness.light,
+        //亮度
+        iconTheme: IconThemeData(color: Colors.black, opacity: 0.9),
+        //改变图标颜色，透明度，大小
+        textTheme: TextTheme(display1: TextStyle(color: Colors.blue)),
+        //太复杂，而且感觉没什么用
+        primary: true,
+        //设置导航栏的内容是否无视手机的导航栏
+        centerTitle: true,
+        //导航标题是否居中
+        titleSpacing: 1,
+        //不知道怎么用
+        toolbarOpacity: 0.5,
+        //标题透明度。
+        bottomOpacity: 0.5, //底部标题透明度
       ),
       body: ListView(
         shrinkWrap: true,
@@ -458,6 +471,42 @@ class list extends StatelessWidget {
 //          Image.asset("images/banner1.png"),
         ],
       ),
+
+      bottomSheet: new Row(
+        //底部菜单
+        children: <Widget>[
+          IconButton(
+              icon: Icon(Icons.access_alarm),
+              onPressed: () {
+                Toast.toast(context, "1");
+              }),
+          IconButton(
+              icon: Icon(Icons.add_location),
+              onPressed: () {
+                Toast.toast(context, "2");
+              }),
+          IconButton(
+              icon: Icon(Icons.print),
+              onPressed: () {
+                Toast.toast(context, "3");
+              }),
+          IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                Toast.toast(context, "4");
+              }),
+        ],
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: null,
+        child: Icon(Icons.arrow_back),
+        backgroundColor: Colors.black,
+      ),
+      //一个浮动在整个界面上方的按钮，布局，通常由FloatingActionButton展示
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      //浮动位置，有centerFloat:中心浮动，centerDocked:中心停靠等(感觉中心浮动和中心停靠没什么区别)
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
 //    return ListView(
 //      children: <Widget>[
 //        new Text("-----------------------"),
@@ -468,6 +517,227 @@ class list extends StatelessWidget {
 //        new Text("-----------------------"),
 //      ],
 //    );
+    );
+  }
+}
+
+class Container3 extends StatelessWidget {
+
+  final String cStr;
+
+  Container3({Key key,@required this.cStr}) : super(key: key);
+
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("容器3"),
+        centerTitle: true,
+        leading: IconButton(
+            icon: Icon(Icons.add_location),
+            onPressed: () {
+              Navigator.push(context, new MaterialPageRoute(builder: (context) => new tabBar(tStr: "跳转tab")));
+            }),
+        //没有点击事件是没有点击效果的
+        actions: <Widget>[
+          IconButton(
+            icon: new Text(cStr),
+            onPressed: () {},
+            padding: EdgeInsets.symmetric(horizontal: 40),
+          ),
+        ],
+        backgroundColor: Colors.black12,
+      ),
+      body: ListView(
+        children: <Widget>[],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+              context: context,
+              builder: (BuildContext context) {
+                return new Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    new ListTile(
+                      leading: new Icon(Icons.photo_camera),
+                      title: new Text("Camera"),
+                      onTap: () async {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text("Gallery"),
+                      onTap: () async {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                );
+              });
+        },
+        backgroundColor: Colors.transparent,
+        child: Icon(
+          Icons.add_circle,
+          size: 50,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      //位置
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+      //切换的动画效果，有默认的效果了
+      bottomNavigationBar: Row(
+        children: <Widget>[
+          IconButton(
+              icon: Icon(
+                Icons.access_alarm,
+                size: 30,
+              ),
+              onPressed: () {
+                Toast.toast(context, "5");
+              }),
+          IconButton(
+              icon: Icon(
+                Icons.map,
+                size: 30,
+              ),
+              onPressed: () {
+                Toast.toast(context, "6");
+              }),
+          IconButton(
+              icon: Icon(
+                Icons.account_balance_wallet,
+                size: 30,
+              ),
+              onPressed: () {
+                Toast.toast(context, "7");
+              }),
+          IconButton(
+              icon: Icon(
+                Icons.account_circle,
+                size: 30,
+              ),
+              onPressed: () {
+                Toast.toast(context, "8");
+              }),
+        ],
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      ),
+//      persistentFooterButtons: <Widget>[new FloatingActionButton(
+//        onPressed: (){},
+//        tooltip: 'Increment',
+//        child: new Icon(Icons.add),
+//      )],
+      drawer: ListView(
+        padding: const EdgeInsets.only(),
+        children: <Widget>[
+          _drawerHeader(),
+          IconButton(
+              icon: Icon(
+                Icons.account_balance,
+                size: _size,
+              ),
+              onPressed: () {
+                if (_counter == 0) {
+                  _counter = 1;
+                  _size = 30;
+                } else {
+                  _counter = 0;
+                  _size = 25;
+                }
+              }),
+          IconButton(
+              icon: Icon(
+                Icons.print,
+                size: _size,
+              ),
+              onPressed: () {
+                if (_counter == 0) {
+                  _counter = 2;
+                  _size = 30;
+                } else {
+                  _counter = 0;
+                  _size = 25;
+                }
+              }),
+        ],
+      ),
+    );
+  }
+
+  int _counter = 0;
+  double _size = 25;
+
+  static Widget _drawerHeader() {
+    return new UserAccountsDrawerHeader(
+//      margin: EdgeInsets.zero,
+      accountName: new Text(
+        "SuperLuo",
+//        style: HStyle.titleNav(),
+      ),
+      accountEmail: new Text(
+        "lll@163.com",
+//        style: HStyle.bodyWhite(),
+      ),
+      currentAccountPicture: new CircleAvatar(
+        backgroundImage: NetworkImage("https://github.com/longtaozz/my_img/blob/master/my_img/IMG_20181231_121741.jpg?raw=true"),
+      ),
+      onDetailsPressed: () {},
+      otherAccountsPictures: <Widget>[
+        new CircleAvatar(
+          backgroundImage: NetworkImage("https://github.com/longtaozz/my_img/blob/master/my_img/IMG_20181231_121741.jpg?raw=true"),
+        ),
+      ],
+    );
+  }
+
+}
+
+class tabBar extends StatelessWidget {
+  final String tStr;
+  tabBar({Key key, @required this.tStr}) : super(key: key);
+
+  final List<Tab> myTabs = <Tab>[
+    new Tab(text: '语文'),
+    new Tab(text: '数学'),
+    new Tab(text: '英语'),
+    new Tab(text: '化学'),
+    new Tab(text: '物理'),
+    new Tab(text: '政治'),
+    new Tab(text: '经济'),
+    new Tab(text: '体育'),
+  ];
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return new DefaultTabController(
+      //默认的tabBar控制器，可以试用TabBar和TabBarView
+      length: myTabs.length, //长度
+      child: new Scaffold(
+        appBar: new AppBar(
+          bottom: new TabBar(
+            tabs: myTabs,
+            isScrollable: true,
+          ),
+        ),
+        body: new TabBarView(
+          children: myTabs.map((Tab tab) {
+            return new Center(child: new Text(tab.text));
+          }).toList(),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            MRoute.goWidget(context, new Container3(cStr: "go3"));
+          },
+          child: new Text(tStr),
+        ),
+      ),
     );
   }
 }
