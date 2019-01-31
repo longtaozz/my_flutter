@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:async';
 import 'util/toast.dart';
 import 'util/route.dart';
+import 'PopupMenuButton.dart';
 
 void main() {
 //  runApp(new MaterialApp(
@@ -11,7 +12,7 @@ void main() {
 //  ));
   runApp(new MaterialApp(
     title: "demo",
-    home: new tabBar(tStr: "第一次进页面"),
+    home: new tabBar(tStr: "第一次进页面flutter"),
 //    routes: <String, WidgetBuilder>{
 //      '/router/home': (BuildContext context) => new Container3(),
 //      '/router/tab': (BuildContext context) => new tabBar(),
@@ -527,7 +528,6 @@ class Container3 extends StatelessWidget {
 
   Container3({Key key,@required this.cStr}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -551,7 +551,9 @@ class Container3 extends StatelessWidget {
         backgroundColor: Colors.black12,
       ),
       body: ListView(
-        children: <Widget>[],
+        children: <Widget>[
+
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -728,7 +730,8 @@ class tabBar extends StatelessWidget {
         ),
         body: new TabBarView(
           children: myTabs.map((Tab tab) {
-            return new Center(child: new Text(tab.text));
+//            return new Center(child: new Text(tab.text));
+          return pop();
           }).toList(),
         ),
         floatingActionButton: FloatingActionButton(
