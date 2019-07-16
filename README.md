@@ -556,3 +556,7 @@ titleSpacing: 99,//不知道怎么用
 toolbarOpacity: 0.5,//标题透明度。
 bottomOpacity: 0.5,//底部标题透明度
 ```
+
+** 手势监听 **
+* 使用GestureDetector
+使用GestureDetector嵌套想要监控的Widget，并且实现相应的方法即可。
